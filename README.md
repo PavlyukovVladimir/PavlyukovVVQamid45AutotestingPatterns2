@@ -1,4 +1,5 @@
-тут бейдж будет
+[![Build status](https://ci.appveyor.com/api/projects/status/u0o59d2y2be13yqf?svg=true)](https://ci.appveyor.com/project/PavlyukovVladimir/pavlyukovvvqamid45autotestingpatterns2)
+
 
 ***Павлюков Владимир Владимирович, группа*** **QAMID45**
 
