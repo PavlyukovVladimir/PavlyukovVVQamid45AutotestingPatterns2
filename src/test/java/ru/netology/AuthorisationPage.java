@@ -39,20 +39,12 @@ public class AuthorisationPage {
         return this;
     }
 
-    public void checkErrorMessage() {
+    public void checkMessage(@NotNull String message) {
         errorNotificationTitleElement
                 .shouldBe(Condition.visible)
                 .shouldBe(Condition.text("Ошибка"));
         errorNotificationContentElement
-                .shouldBe(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofMillis(250));
-    }
-
-    public void checkBlockedMessage() {
-        errorNotificationTitleElement
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.text("Ошибка"));
-        errorNotificationContentElement
-                .shouldBe(Condition.text("Ошибка! Пользователь заблокирован"), Duration.ofMillis(250));
+                .shouldBe(Condition.text(message), Duration.ofMillis(250));
     }
 
     public void checkPersonalAccount() {

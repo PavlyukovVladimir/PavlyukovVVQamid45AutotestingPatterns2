@@ -54,20 +54,12 @@ public class DataHelper {
         return new AuthorisationInfo(login, pass, info.getStatus());
     }
 
-    public static AuthorisationInfo getActiveAuthorisationInfo() {
+    public static AuthorisationInfo getAuthorisationInfo(@NotNull AuthStatuses status) {
         Faker faker = new Faker(Locale.forLanguageTag("ru"));
         Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
         var login = toLatinTrans.transliterate(faker.name().username());
         var pass = faker.internet().password();
-        var status = AuthStatuses.active;
         AuthorisationInfo info = new AuthorisationInfo(login, pass, status);
-        return info;
-    }
-
-    public static AuthorisationInfo getBlockedAuthorisationInfo() {
-        AuthorisationInfo activeInfo = getActiveAuthorisationInfo();
-        var status = AuthStatuses.blocked;
-        AuthorisationInfo info = new AuthorisationInfo(activeInfo.getLogin(), activeInfo.password, status);
         return info;
     }
 

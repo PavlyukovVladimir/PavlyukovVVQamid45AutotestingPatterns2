@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import ru.netology.DataHelper.AuthStatuses;
+
+import static ru.netology.DataHelper.getAuthorisationInfo;
 
 @ExtendWith({ScreenShooterExtension.class})
 public class AuthTest {
@@ -27,7 +30,7 @@ public class AuthTest {
     @Test
     void activeUserTest() {
         page
-                .fillForm(DataHelper.setCredentials(DataHelper.getActiveAuthorisationInfo()))
+                .fillForm(DataHelper.setCredentials(getAuthorisationInfo(AuthStatuses.active)))
                 .clickSubmit()
                 .checkPersonalAccount();
     }
@@ -39,19 +42,19 @@ public class AuthTest {
                 .fillForm(
                         DataHelper.breakCredentials(
                                 DataHelper.setCredentials(
-                                        DataHelper.getActiveAuthorisationInfo()),
+                                        getAuthorisationInfo(AuthStatuses.active)),
                                 DataHelper.BreakCredentialsType.BOTH))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Заблокирован, креды верны")
     @Test
     void blockedUserTest() {
         page
-                .fillForm(DataHelper.setCredentials(DataHelper.getBlockedAuthorisationInfo()))
+                .fillForm(DataHelper.setCredentials(getAuthorisationInfo(AuthStatuses.blocked)))
                 .clickSubmit()
-                .checkBlockedMessage();
+                .checkMessage("Ошибка! Пользователь заблокирован");
     }
 
     @DisplayName("Заблокирован, все креды не верны")
@@ -60,20 +63,19 @@ public class AuthTest {
         page
                 .fillForm(
                         DataHelper.breakCredentials(
-                                DataHelper.setCredentials(
-                                        DataHelper.getBlockedAuthorisationInfo()),
+                                DataHelper.setCredentials(getAuthorisationInfo(AuthStatuses.blocked)),
                                 DataHelper.BreakCredentialsType.BOTH))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Неизвестный пользователь")
     @Test
     void unknownUserTest() {
         page
-                .fillForm(DataHelper.getActiveAuthorisationInfo())
+                .fillForm(getAuthorisationInfo(AuthStatuses.active))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Активен, только пароль не верный")
@@ -83,10 +85,10 @@ public class AuthTest {
                 .fillForm(
                         DataHelper.breakCredentials(
                                 DataHelper.setCredentials(
-                                        DataHelper.getActiveAuthorisationInfo()),
+                                        getAuthorisationInfo(AuthStatuses.active)),
                                 DataHelper.BreakCredentialsType.PASSWORD))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Активен, только логин не верный")
@@ -96,10 +98,10 @@ public class AuthTest {
                 .fillForm(
                         DataHelper.breakCredentials(
                                 DataHelper.setCredentials(
-                                        DataHelper.getActiveAuthorisationInfo()),
+                                        getAuthorisationInfo(AuthStatuses.active)),
                                 DataHelper.BreakCredentialsType.LOGIN))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Заблокирован, только пароль не верный")
@@ -108,11 +110,10 @@ public class AuthTest {
         page
                 .fillForm(
                         DataHelper.breakCredentials(
-                                DataHelper.setCredentials(
-                                        DataHelper.getBlockedAuthorisationInfo()),
+                                DataHelper.setCredentials(getAuthorisationInfo(AuthStatuses.blocked)),
                                 DataHelper.BreakCredentialsType.PASSWORD))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 
     @DisplayName("Заблокирован, только логин не верный")
@@ -121,10 +122,9 @@ public class AuthTest {
         page
                 .fillForm(
                         DataHelper.breakCredentials(
-                                DataHelper.setCredentials(
-                                        DataHelper.getBlockedAuthorisationInfo()),
+                                DataHelper.setCredentials(getAuthorisationInfo(AuthStatuses.blocked)),
                                 DataHelper.BreakCredentialsType.LOGIN))
                 .clickSubmit()
-                .checkErrorMessage();
+                .checkMessage("Ошибка! Неверно указан логин или пароль");
     }
 }
