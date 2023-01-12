@@ -16,21 +16,11 @@ public class AuthorisationPage {
     private SelenideElement errorNotificationContentElement = $("[data-test-id=error-notification] .notification__content");
     private SelenideElement h2Element = $("h2");
 
-    public AuthorisationPage fillLogin(@NotNull String login) {
-        loginElement.shouldBe(Condition.visible).setValue(login);
-        return this;
-    }
-
-    public AuthorisationPage fillPassword(@NotNull String pass) {
-        passwordElement.shouldBe(Condition.visible).setValue(pass);
-        return this;
-    }
-
     public AuthorisationPage fillForm(@NotNull DataHelper.AuthorisationInfo info) {
         String login = info.getLogin();
-        if (login != null) fillLogin(login);
+        if (login != null) loginElement.shouldBe(Condition.visible).setValue(login);
         String pass = info.getPassword();
-        if (pass != null) fillPassword(pass);
+        if (pass != null) passwordElement.shouldBe(Condition.visible).setValue(pass);
         return this;
     }
 
