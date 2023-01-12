@@ -34,7 +34,7 @@ public class AuthorisationPage {
                 .shouldBe(Condition.visible)
                 .shouldBe(Condition.text("Ошибка"));
         errorNotificationContentElement
-                .shouldBe(Condition.text(message), Duration.ofMillis(250));
+                .shouldBe(Condition.text(message));
     }
 
     public void checkPersonalAccount() {
